@@ -13,7 +13,15 @@ class App extends React.Component {
   }
 
   updateList(newItem) {
-    this.setState({'list': this.state.list.concat(newItem)});
+    var thisItem = false;
+    this.state.list.forEach((listItem, index) => listItem.description === newItem.description ? thisItem = [index, listItem.quantity] : thisItem);
+    
+    if (thisItem) {
+      this.state.list[thisItem[0]].quantity += newItem.quantity;
+      this.forceUpdate();
+    } else {
+      this.setState({'list': this.state.list.concat(newItem)});
+    }
   }
 
   render () {
